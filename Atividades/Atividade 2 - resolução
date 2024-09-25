@@ -1,0 +1,50 @@
+1. O que é DeadLock:
+
+Deadlock é quando duas ou mais threads ficam presas, esperando indefinidamente por recursos que estão bloqueados umas pelas outras, impedindo a execução.
+
+2. Problemas que o Deadlock pode causar:
+
+- Travamento de aplicação, consumo de recursos, baixo desempenho e perda de dados ou corrupção.
+
+Exemplo de DeadLock:
+
+public class Main {
+    public static void main(String[] args) {
+        final Object resource1 = "Recurso 1";
+        final Object resource2 = "Recurso 2";
+
+        
+        Thread thread1 = new Thread(() -> {
+            synchronized (resource1) {
+                System.out.println("Thread 1: bloqueou resource 1");
+
+                try { Thread.sleep(100); } 
+                catch (InterruptedException e) {}
+
+                System.out.println("Thread 1: tentando bloquear resource 2");
+                synchronized (resource2) {
+                    System.out.println("Thread 1: bloqueou resource 2");
+                }
+            }
+        });
+
+       
+        Thread thread2 = new Thread(() -> {
+            synchronized (resource2) {
+                System.out.println("Thread 2: bloqueou resource 2");
+
+                try { Thread.sleep(100); } 
+                catch (InterruptedException e) {}
+
+                System.out.println("Thread 2: tentando bloquear resource 1");
+                synchronized (resource1) {
+                    System.out.println("Thread 2: bloqueou resource 1");
+                }
+            }
+        });
+
+        
+        thread1.start();
+        thread2.start();
+    }
+}
