@@ -13,3 +13,28 @@ Avaliação:
 
 
 
+public class Fibonacci {
+
+    public static int fibonacci(int n) {
+
+        if (n <= 1) {
+            return n;
+        }
+
+        int anterior = 0, atual = 1;
+
+        for (int i = 2; i <= n; i++) {
+            int proximo = anterior + atual; 
+            anterior = atual;              
+            atual = proximo;               
+        }
+
+        return atual; 
+    }
+
+    public static void main(String[] args) {
+        int n = 10;
+
+        System.out.println("O " + n + "º número de Fibonacci é: " + fibonacci(n));
+    }
+}
